@@ -44,15 +44,29 @@ def evaluate_performance_static_speedup(
     args,
     target_speedup,
     repeats=3,
+    enforce_correctness=True,
 ):
     baseline_result, baseline_time = measure(baseline_func, *args, repeats=repeats)
     student_result, student_time = measure(student_func, *args, repeats=repeats)
 
-    if baseline_result != student_result:
-        print(color("✗ Your result does not match baseline result.", C.RED))
-        print(f"Baseline result: {baseline_result}")
-        print(f"Your result : {student_result}")
+    if baseline_result != student_result and enforce_correctness:
+        print(color("\n❌ CORRECTNESS FAILURE: Optimized result differs from baseline.", C.RED))
+        print(color("Your optimization changed the observable behavior of the system.", C.YELLOW))
+        print()
+        print(color("Baseline result:", C.CYAN), baseline_result)
+        print(color("Your result   :", C.CYAN), student_result)
+        print()
+        print(color("⚠️  Even small numeric differences are considered incorrect.", C.YELLOW))
+        print(color("Common causes:", C.YELLOW))
+        print("  - Reusing computation across requests when state changes")
+        print("  - Caching without proper invalidation")
+        print("  - Changing tie-breaking behavior in shortest path")
+        print("  - Mutating shared state in a different order")
+        print()
+        print(color("Performance will NOT be evaluated until correctness matches baseline.", C.RED))
         return
+
+   
 
     student_speedup = baseline_time / student_time if student_time > 0 else float("inf")
     progress = min(student_speedup / target_speedup, 1.0) if target_speedup > 0 else 1.0

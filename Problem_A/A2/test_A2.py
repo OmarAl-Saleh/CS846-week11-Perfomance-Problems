@@ -12,7 +12,7 @@ from utils.baselines.baseline_A2 import (
     baseline_answer_reachability_queries,
 )
 
-from Problem_A.A2.optimized import (
+from Problem_A.A2.grid_matrix_graph_search import (
     min_path_cost,
     search_documents,
     count_target_submatrices,

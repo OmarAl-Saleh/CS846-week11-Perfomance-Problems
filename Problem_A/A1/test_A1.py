@@ -10,7 +10,7 @@ from utils.baselines.baseline_A1 import (
     baseline_count_subarrays_equal_k,
 )
 
-from Problem_A.A1.optimized import (
+from Problem_A.A1.array_bruteforce import (
     first_unique_value,
     count_subarrays_equal_k,
 )
