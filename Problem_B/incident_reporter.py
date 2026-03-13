@@ -391,7 +391,7 @@ def run_tests() -> None:
 
 
 def run_benchmark() -> float:
-    events = generate_events(180_000)
+    events = generate_events(900_000)
 
     t0 = time.perf_counter()
     _report = generate_incident_report(events)
