@@ -16,9 +16,10 @@ def find_difference(numbers):
     pass
 
 
-start = time.perf_counter()
-result = find_difference(numbers)
-elapsed = time.perf_counter() - start
+if __name__ == "__main__":
+    start = time.perf_counter()
+    result = find_difference(numbers)
+    elapsed = time.perf_counter() - start
 
-print(f"Result: {result}")
-print(f"Time: {elapsed:.3f}s")
+    print(f"Result: {result}")
+    print(f"Time: {elapsed:.3f}s")
