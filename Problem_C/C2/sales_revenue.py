@@ -1,7 +1,8 @@
 # Sales Revenue Aggregator
 #
 # This function processes sales records and returns total revenue per category.
-# It's slow. Your job: make it faster.
+# Each processing step could benefit from more efficient data structures.
+# Optimize this code for better performance.
 
 import random
 import time
