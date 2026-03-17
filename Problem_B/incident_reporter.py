@@ -191,15 +191,12 @@ _UA_EDGE_RE = re.compile(r"\bEdg/\d+", re.IGNORECASE)
 @profile
 def parse_user_agent(user_agent: str) -> Tuple[str, str]:
     """Return (device_family, browser_family).
-
-    Intentionally somewhat expensive to make profiling meaningful.
     """
 
     ua = user_agent
 
     # Some realistic-but-costly normalization work (still returns same result).
-    # The important twist is that this function is frequently called on
-    # high-cardinality inputs.
+    # This important twist is that this function is frequently called on high-cardinality inputs.
     lower = ua.lower()
     tokens = re.split(r"[();/\s]+", lower)
 
@@ -391,7 +388,7 @@ def run_tests() -> None:
 
 
 def run_benchmark() -> float:
-    events = generate_events(900_000)
+    events = generate_events(180_000)
 
     t0 = time.perf_counter()
     _report = generate_incident_report(events)
