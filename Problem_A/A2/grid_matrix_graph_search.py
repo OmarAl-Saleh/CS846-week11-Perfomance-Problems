@@ -27,21 +27,44 @@ def min_path_cost(grid: List[List[int]]) -> int:
     return solve(0, 0)
 
 
+# def search_documents(documents: List[str], query: str) -> List[int]:
+#     """
+#     Problem 2:
+#     Return indices of documents that contain all terms in the query.
+
+#     """
+#     query_terms = query.lower().split()
+#     result = []
+
+#     for index, doc in enumerate(documents):
+#         words = doc.lower().split()
+#         if all(term in words for term in query_terms):
+#             result.append(index)
+
+#     return result
+
 def search_documents(documents: List[str], query: str) -> List[int]:
     """
     Problem 2:
     Return indices of documents that contain all terms in the query.
-
     """
     query_terms = query.lower().split()
     result = []
 
     for index, doc in enumerate(documents):
-        words = doc.lower().split()
-        if all(term in words for term in query_terms):
+        matched_all = True
+
+        for term in query_terms:
+            words = doc.lower().split()
+            if term not in words:
+                matched_all = False
+                break
+
+        if matched_all:
             result.append(index)
 
     return result
+
 
 
 def count_target_submatrices(matrix: List[List[int]], target: int) -> int:

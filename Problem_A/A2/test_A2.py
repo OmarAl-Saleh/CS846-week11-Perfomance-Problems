@@ -12,7 +12,7 @@ from utils.baselines.baseline_A2 import (
     baseline_answer_reachability_queries,
 )
 
-from Problem_A.A2.optimized import (
+from Problem_A.A2.grid_matrix_graph_search import (
     min_path_cost,
     search_documents,
     count_target_submatrices,
@@ -90,6 +90,39 @@ def test_problem_2_correctness():
             )
 
     print(color("Problem 2 correctness passed. ✓", C.GREEN))
+    return True
+
+def test_problem_2_mutation_correctness():
+    docs = [
+        "python data search engine",
+        "graph tree hash array",
+        "python token query document",
+    ]
+
+    # First call
+    result1 = search_documents(docs, "python")
+    if result1 != [0, 2]:
+        return fail_correctness(
+            "Problem 2 Mutation",
+            {"step": "initial"},
+            [0, 2],
+            result1,
+        )
+
+    # Mutate documents
+    docs[0] = "memory cache window sum"
+
+    # Second call MUST reflect change
+    result2 = search_documents(docs, "python")
+    if result2 != [2]:
+        return fail_correctness(
+            "Problem 2 Mutation",
+            {"step": "after mutation"},
+            [2],
+            result2,
+        )
+
+    print(color("Problem 2 mutation correctness passed. ✓", C.GREEN))
     return True
 
 
@@ -209,7 +242,7 @@ QUERIES_PERF = [(0, COURSE_COUNT - 1)] * 3000 + [(10, 150)] * 2000 + [(20, 90)] 
 
 
 PROBLEM_1_TARGET_SPEEDUP = 6221.64
-PROBLEM_2_TARGET_SPEEDUP = 35.52
+PROBLEM_2_TARGET_SPEEDUP = 1.18
 PROBLEM_3_TARGET_SPEEDUP = 23.62
 PROBLEM_4_TARGET_SPEEDUP = 55.94
 
@@ -272,6 +305,10 @@ if __name__ == "__main__":
     if not test_problem_2_correctness():
         sys.exit(1)
     run_problem_2_performance()
+
+    if not test_problem_2_mutation_correctness():
+        sys.exit(1)
+    
 
     if not test_problem_3_correctness():
         sys.exit(1)

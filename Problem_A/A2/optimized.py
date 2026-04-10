@@ -37,48 +37,21 @@ def min_path_cost(grid: List[List[int]]) -> int:
 
 def search_documents(documents: List[str], query: str) -> List[int]:
     """
-    Optimized Problem 2:
-    Build and cache an inverted index for the given documents list.
-
-    This works well when:
-    - the same documents object is queried repeatedly
-    - benchmark repeats run on the same dataset
+    Problem 2:
+    Return indices of documents that contain all terms in the query.
     """
-
-    if not hasattr(search_documents, "_cache"):
-        search_documents._cache = {}
-
-    cache: Dict[int, Dict[str, Set[int]]] = search_documents._cache
-    docs_key = id(documents)
-
-    if docs_key not in cache:
-        inverted_index: Dict[str, Set[int]] = {}
-
-        for doc_id, doc in enumerate(documents):
-            for word in set(doc.lower().split()):
-                if word not in inverted_index:
-                    inverted_index[word] = set()
-                inverted_index[word].add(doc_id)
-
-        cache[docs_key] = inverted_index
-
-    inverted_index = cache[docs_key]
-    query_terms = query.lower().split()
-
+    query_terms = set(query.lower().split())
     if not query_terms:
         return list(range(len(documents)))
 
-    first_term_docs = inverted_index.get(query_terms[0], set()).copy()
-    if not first_term_docs:
-        return []
+    result = []
 
-    result_docs = first_term_docs
-    for term in query_terms[1:]:
-        result_docs &= inverted_index.get(term, set())
-        if not result_docs:
-            return []
+    for index, doc in enumerate(documents):
+        words = set(doc.lower().split())
+        if query_terms.issubset(words):
+            result.append(index)
 
-    return sorted(result_docs)
+    return result
 
 
 def count_target_submatrices(matrix: List[List[int]], target: int) -> int:
