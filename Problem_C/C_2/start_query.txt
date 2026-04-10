@@ -1,0 +1,2 @@
+This function processes sales records and returns total revenue per category.
+It's running slowly on 500k records. Optimize it for better performance.
